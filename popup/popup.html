@@ -11,7 +11,7 @@
   <!-- Header -->
   <div class="header">
     
-    <button id="backBtn" class="header-btn" style="display: none;">←</button>
+    <button id="backBtn" class="header-btn" style="display: none;">⬅</button>
     
     <h1 class="header-title">
       <span style="font-size: 1.2rem;">⚡</span>
@@ -70,10 +70,14 @@
         <div class="settings-form">
           <div class="form-group">
             <label>API Key</label>
-            <input type="password" id="apiKeyInput" placeholder="sk-proj-..." class="form-input">
+            <div class="input-with-toggle">
+              <input type="password" id="apiKeyInput" placeholder="sk-proj-..." class="form-input">
+              <button type="button" id="toggleApiKey" class="password-toggle">
+                <span id="eyeIcon">👁️</span>
+              </button>
+            </div>
           </div>
           <div class="api-status">
-            <span style="font-size: 0.8rem; color: var(--text-primary);">API Status</span>
             <div id="apiStatus" class="api-status-indicator">
               <div id="statusDot" class="status-dot"></div>
               <span id="statusText" class="status-text">Not configured</span>

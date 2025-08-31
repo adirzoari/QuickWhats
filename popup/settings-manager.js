@@ -13,6 +13,23 @@ class SettingsManager {
   init() {
     this.elements.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
     this.elements.testApiBtn.addEventListener('click', () => this.testApi());
+    
+    // Add password toggle functionality
+    const toggleBtn = document.getElementById('toggleApiKey');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const eyeIcon = document.getElementById('eyeIcon');
+    
+    if (toggleBtn && apiKeyInput && eyeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        if (apiKeyInput.type === 'password') {
+          apiKeyInput.type = 'text';
+          eyeIcon.textContent = '🙈';
+        } else {
+          apiKeyInput.type = 'password';
+          eyeIcon.textContent = '👁️';
+        }
+      });
+    }
   }
 
   async loadSettings() {
@@ -99,13 +116,13 @@ class SettingsManager {
 
   updateApiStatus(connected) {
     if (connected) {
-      this.elements.statusDot.className = 'w-2 h-2 bg-success rounded-full';
+      this.elements.statusDot.className = 'status-dot connected';
       this.elements.statusText.textContent = 'Connected';
-      this.elements.statusText.className = 'text-xs text-success';
+      this.elements.statusText.className = 'status-text';
     } else {
-      this.elements.statusDot.className = 'w-2 h-2 bg-secondary rounded-full';
+      this.elements.statusDot.className = 'status-dot';
       this.elements.statusText.textContent = 'Not configured';
-      this.elements.statusText.className = 'text-xs text-secondary';
+      this.elements.statusText.className = 'status-text';
     }
   }
 
