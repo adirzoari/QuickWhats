@@ -204,9 +204,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log('Using source:', actualSource);
     sendNumbersToPopup(lastPhoneNumbers, actualSource, message.action);
   }
-
-  // Legacy support: Content script updates single selected phone number
-  if (message.phoneNumber) {
+  // Legacy support: Content script updates single selected phone number (only if not modern format)
+  else if (message.phoneNumber && !message.phoneNumbers) {
     lastPhoneNumbers = [message.phoneNumber];
     console.log('Updated lastPhoneNumber from content script:', lastPhoneNumbers);
     console.log('Legacy message:', JSON.stringify(message)); // Debug full message
