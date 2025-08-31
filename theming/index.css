@@ -1,0 +1,67 @@
+/**
+ * QuickWhats Chrome Extension Design System
+ * 
+ * A clean, light, professional design system with WhatsApp brand recognition
+ * through strategic use of greens and teals.
+ * 
+ * Color Palette:
+ * - CP1 (#075E54): Dark WhatsApp teal for headers, primary buttons, main text
+ * - CP2 (#128C7E): Medium teal for hover states, secondary elements
+ * - CP3 (#E8F5E8): Very light green for subtle backgrounds, borders
+ * - CP4 (#4AE374): Light WhatsApp green for success states, highlights
+ * - CP5 (#F8F9FA): Off-white for secondary backgrounds, input fields
+ * - CP6 (#FFFFFF): Pure white for main backgrounds, card surfaces
+ */
+
+/* Import design system files in proper cascade order */
+@import './variables.css';
+@import './components.css';
+@import './utilities.css';
+
+/* Global reset and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-background-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chrome extension specific styles */
+.chrome-extension-root {
+  min-width: 320px;
+  max-width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  background-color: var(--color-background-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Scrollbar styling for Chrome extension */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}

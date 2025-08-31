@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickWhats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="chrome-extension-root">
+  <!-- Header -->
+  <div class="header">
+    
+    <button id="backBtn" class="header-btn" style="display: none;">←</button>
+    
+    <h1 class="header-title">
+      <span style="font-size: 1.2rem;">⚡</span>
+      QuickWhats
+    </h1>
+    
+    <button id="settingsBtn" class="header-btn">⚙️</button>
+  </div>
+  
+  <div class="main-content">
+    <!-- Main content -->
+    <div id="mainContent">
+      <!-- Multi-phone selection (enhanced) -->
+      <div id="phoneSelectContainer" class="phone-select-container">
+        <h3 class="phone-select-title">Detected Numbers</h3>
+        <select id="phoneSelect" class="phone-select"></select>
+      </div>
+
+    <!-- Phone Number Section -->
+    <div class="phone-section">
+      <label class="phone-label">Phone Number</label>
+      <div class="phone-country-code-section">
+      <select id="countrySelect" class="form-input country-select"></select>
+      <input type="text" id="phoneNumber" placeholder="0526366655" class="form-input phone-input-single" />
+      </div>
+    </div>
+    
+    <!-- Message box -->
+    <div class="message-section">
+      <label class="message-label">Message (Optional)</label>
+      <textarea id="message" rows="3" placeholder="Type your message..." class="message-textarea"></textarea>
+    </div>
+
+    <!-- Send button -->
+    <button id="sendBtn" class="send-btn">
+      <span>⚡</span>
+      <span>Send WhatsApp</span>
+    </button>
+
+      <!-- Recent numbers section -->
+      <div id="recentContainer" style="display: none;">
+        <div class="recent-header">
+          <h4 class="recent-title">Recent Numbers</h4>
+          <button id="clearAllBtn" title="Clear all recent numbers" class="clear-all-btn">🗑️</button>
+        </div>
+        <div id="recentNumbers"></div>
+      </div>
+    </div>
+
+    <!-- Settings content -->
+    <div id="settingsContent" style="display: none;">
+      <!-- OpenAI Vision API Section -->
+      <div class="settings-section">
+        <h3 class="settings-title">OpenAI Vision API</h3>
+        
+        <div class="settings-form">
+          <div class="form-group">
+            <label>API Key</label>
+            <input type="password" id="apiKeyInput" placeholder="sk-proj-..." class="form-input">
+          </div>
+          <div class="api-status">
+            <span style="font-size: 0.8rem; color: var(--text-primary);">API Status</span>
+            <div id="apiStatus" class="api-status-indicator">
+              <div id="statusDot" class="status-dot"></div>
+              <span id="statusText" class="status-text">Not configured</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy Notice -->
+      <div class="privacy-notice">
+        <div class="privacy-content">
+          <span style="font-size: 1rem;">🔒</span>
+          <span class="privacy-text">All data processing happens locally. API calls are secure and encrypted.</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button id="saveSettingsBtn" class="save-btn">
+          <span>Save Settings</span>
+        </button>
+        <button id="testApiBtn" class="test-btn">
+          <span>Test API</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container"></div>
+  
+
+  <!-- Scripts -->
+  <script src="../utils/libphonenumber-js.min.js"></script>
+  <script src="../utils/phoneUtils.js"></script>
+  <script src="../utils/countries.js"></script>
+  <script src="../recent-storage.js"></script>
+  <script src="toast.js"></script>
+  <script src="recent-numbers.js"></script>
+  <script src="settings-manager.js"></script>
+  <script src="popup-utils.js"></script>
+  <script src="popup-messaging.js"></script>
+  <script src="popup.js"></script>
+
+</body>
+</html>
