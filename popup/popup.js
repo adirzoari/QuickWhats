@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContent = document.getElementById('mainContent');
   const settingsContent = document.getElementById('settingsContent');
   const headerTitle = document.querySelector('.header-title');
+  const logoImage = document.getElementById("headerLogo")
   const backBtn = document.getElementById('backBtn');
   const settingsBtn = document.getElementById('settingsBtn');
   const DEFAULT_COUNTRY = 'IL';
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backBtn.style.display = 'none';
     settingsBtn.style.display = 'block';
     mainContent.style.display = 'block';
+    logoImage.style.display = 'block';
     settingsContent.style.display = 'none';
   };
 
@@ -58,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backBtn.style.display = 'block';
     settingsBtn.style.display = 'none';
     mainContent.style.display = 'none';
+    logoImage.style.display ='none';
     settingsContent.style.display = 'block';
   };
 

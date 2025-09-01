@@ -21,11 +21,15 @@ class PopupMessaging {
     chrome.runtime.onMessage.addListener((message) => {
       console.log('Received message from background:', message);
       
-      if (message.phoneNumbers?.length) this.popupUtils.setPhoneList(message.phoneNumbers);
+      // Only process phone number updates from broadcast messages (not response messages)
+      // Ignore phone updates that come with recent number updates (likely from delete operations)
+      if (message.phoneNumbers?.length && message.source && !message.recentNumbers) {
+        this.popupUtils.setPhoneList(message.phoneNumbers);
+      }
       if (message.recentNumbers !== undefined) this.recentNumbersManager.update(message.recentNumbers);
       
-      // Handle combined toast notifications from background
-      if (message.toast) {
+      // Handle combined toast notifications from background (only for phone detection, not delete operations)
+      if (message.toast && message.source && !message.recentNumbers) {
         if (this.currentProcessingToast && message.toast.type !== 'processing') {
           this.toastManager.remove(this.currentProcessingToast);
           this.currentProcessingToast = null;
@@ -35,8 +39,8 @@ class PopupMessaging {
         if (message.toast.type === 'processing') this.currentProcessingToast = toast;
       }
       
-      // Handle legacy toast notifications (for backwards compatibility)
-      if (message.action === 'showToast') {
+      // Handle legacy toast notifications (for backwards compatibility, only for phone detection)
+      if (message.action === 'showToast' && message.source && !message.recentNumbers) {
         if (this.currentProcessingToast && message.type !== 'processing') {
           this.toastManager.remove(this.currentProcessingToast);
           this.currentProcessingToast = null;

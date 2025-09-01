@@ -28,7 +28,6 @@ const saveRecentNumbers = async () => {
 
 // Add number to recent list
 const addToRecentNumbers = (phoneNumber, countryCode = '+972', source = 'unknown') => {
-  console.log('addToRecentNumbers called with:', {phoneNumber, countryCode, source}); // Debug
   let cleanedNumber = phoneNumber.replace(/\D/g, ''); // Remove all non-digits
   
   // Handle different phone number formats
@@ -49,14 +48,12 @@ const addToRecentNumbers = (phoneNumber, countryCode = '+972', source = 'unknown
   // Remove existing entry if present
   recentNumbers = recentNumbers.filter(item => item.number !== fullNumber);
   
-  // Add to beginning
+  // Add to beginning (simplified without source tracking)
   const newItem = {
     number: fullNumber,
     timestamp,
-    country: countryCode,
-    source: source
+    country: countryCode
   };
-  console.log('Storing recent number item:', JSON.stringify(newItem)); // Debug
   recentNumbers.unshift(newItem);
   
   // Limit size
