@@ -1,5 +1,8 @@
 // Import modules
 importScripts('recent-storage.js');
+importScripts('openai-models.js');
+importScripts('image-downloader.js');
+importScripts('openai-client.js');
 importScripts('image-processor.js');
 
 let lastPhoneNumbers = []; // store all detected numbers

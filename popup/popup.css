@@ -180,7 +180,7 @@ body {
 }
 
 .country-select {
-  flex: 0 0 80px;
+  flex: 0 0 130px;
   font-size: 0.65rem;
   overflow: visible;
   text-overflow: clip;
@@ -552,6 +552,7 @@ body {
 
 /* Form inputs */
 .form-input {
+  width: 100%;
   padding: var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);

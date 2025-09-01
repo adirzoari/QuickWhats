@@ -8,6 +8,7 @@ class SettingsManager {
     this.elements = elements;
     this.toastManager = toastManager;
     this.init();
+    this.populateModelOptions();
   }
 
   init() {
@@ -32,17 +33,46 @@ class SettingsManager {
     }
   }
 
+  // Populate model selection dropdown
+  populateModelOptions() {
+    const modelSelect = document.getElementById('modelSelect');
+    if (modelSelect && typeof getAvailableModels === 'function') {
+      // Clear existing options
+      modelSelect.innerHTML = '';
+      
+      // Add options from the models configuration
+      getAvailableModels().forEach(model => {
+        const option = document.createElement('option');
+        option.value = model.id;
+        option.textContent = model.name;
+        if (model.description) {
+          option.title = model.description;
+        }
+        modelSelect.appendChild(option);
+      });
+    }
+  }
+
   async loadSettings() {
-    const settings = await chrome.storage.local.get(['openAiKey']);
+    const settings = await chrome.storage.local.get(['openAiKey', 'openAiModel']);
     
     if (settings.openAiKey) {
       this.elements.apiKeyInput.value = settings.openAiKey;
       this.updateApiStatus(true);
     }
+    
+    // Set selected model or default
+    const modelSelect = document.getElementById('modelSelect');
+    if (modelSelect) {
+      const selectedModel = settings.openAiModel || getDefaultModel();
+      modelSelect.value = selectedModel;
+    }
   }
 
   async saveSettings() {
     const apiKey = this.elements.apiKeyInput.value.trim();
+    const modelSelect = document.getElementById('modelSelect');
+    const selectedModel = modelSelect ? modelSelect.value : getDefaultModel();
     
     // Validate API key if provided
     if (apiKey && !apiKey.startsWith('sk-')) {
@@ -51,7 +81,8 @@ class SettingsManager {
     }
     
     const settings = {
-      openAiKey: apiKey
+      openAiKey: apiKey,
+      openAiModel: selectedModel
     };
     
     try {

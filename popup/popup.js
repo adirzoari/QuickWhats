@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Settings elements
   const apiKeyInput = document.getElementById('apiKeyInput');
+  const modelSelect = document.getElementById('modelSelect');
   const saveSettingsBtn = document.getElementById('saveSettingsBtn');
   const testApiBtn = document.getElementById('testApiBtn');
   const statusDot = document.getElementById('statusDot');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const settingsElements = {
     apiKeyInput,
+    modelSelect,
     saveSettingsBtn,
     testApiBtn,
     statusDot,
