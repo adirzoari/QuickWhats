@@ -30,13 +30,11 @@ class ImageProcessor {
       const numbers = await this.openAIClient.processImage(imageData);
       
       if (numbers.length === 0) {
-        console.log('No number found in image.');
         this.sendToastToPopup('No phone numbers detected', 'info');
         this.sendToastToBrowser('No phone numbers detected', 'info');
         return;
       }
 
-      console.log('Detected number(s) from image:', numbers);
       this.sendNumbersToPopup(numbers, source);
       
       // Send success toast to browser
@@ -46,7 +44,6 @@ class ImageProcessor {
       this.sendToastToBrowser(browserMessage, 'success');
 
     } catch (err) {
-      console.log('Image processing error:', err.message);
       
       let errorMessage = this.openAIClient.getErrorMessage(err);
       let shouldRetryWithDownload = false;
@@ -66,7 +63,6 @@ class ImageProcessor {
           const base64Data = await this.imageDownloader.downloadImageAsBase64(imageUrl);
           return await this.extractPhoneFromImage(base64Data, source);
         } catch (downloadErr) {
-          console.log('Fallback download also failed:', downloadErr.message);
           errorMessage = 'Both direct access and download failed. Image may not be accessible.';
         }
       }
@@ -94,13 +90,11 @@ class ImageProcessor {
       const numbers = await this.openAIClient.processImage(imageData);
       
       if (numbers.length === 0) {
-        console.log('No number found in image.');
         this.sendToastToPopup('No phone numbers detected', 'info');
         this.sendToastToBrowser('No phone numbers detected', 'info');
         return;
       }
 
-      console.log('Detected number(s) from image:', numbers);
       this.sendNumbersToPopup(numbers, source);
       
       // Send success toast to browser
@@ -110,7 +104,6 @@ class ImageProcessor {
       this.sendToastToBrowser(browserMessage, 'success');
 
     } catch (err) {
-      console.log('Image processing error:', err.message);
       const errorMessage = this.openAIClient.getErrorMessage(err);
       this.sendToastToPopup(errorMessage, 'error', 8000);
       this.sendToastToBrowser(errorMessage, 'error', 8000);
@@ -123,13 +116,11 @@ class ImageProcessor {
       const numbers = await this.openAIClient.processImage(imageData);
       
       if (numbers.length === 0) {
-        console.log('No number found in image.');
         this.sendToastToPopup('No phone numbers detected', 'info');
         this.sendToastToBrowser('No phone numbers detected', 'info');
         return;
       }
 
-      console.log('Detected number(s) from image:', numbers);
       this.sendNumbersToPopup(numbers, source);
       
       // Send success toast to browser
@@ -139,7 +130,6 @@ class ImageProcessor {
       this.sendToastToBrowser(browserMessage, 'success');
 
     } catch (err) {
-      console.log('OpenAI API error:', err.message);
       const errorMessage = this.openAIClient.getErrorMessage(err);
       this.sendToastToPopup(errorMessage, 'error', 8000);
       this.sendToastToBrowser(errorMessage, 'error', 8000);

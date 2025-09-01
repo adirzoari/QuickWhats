@@ -165,8 +165,8 @@ body {
 }
 
 .header-btn:hover {
-  background: var(--primary-green);
-  color: white;
+  background: var(--light-green);
+  color: var(--text-primary);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -261,7 +261,7 @@ body {
 
 .recent-number-item {
   display: flex;
-  padding: var(--space-4);
+  padding: var(--space-2);
   background: var(--surface);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-2);
@@ -271,8 +271,8 @@ body {
 }
 
 .recent-number-item:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-hover);
+  background: var(--gray-100);
+  border-color: var(--gray-300);
 }
 
 .recent-number-main {
@@ -506,11 +506,47 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
 }
 
+/* Phone selector header layout */
+.phone-select-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
 .phone-select-title {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  margin: 0;
+}
+
+.phone-select-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.phone-select-close-btn:hover {
+  background: var(--gray-200);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.phone-select-close-btn:active {
+  transform: scale(0.95);
 }
 
 .phone-select {
@@ -626,7 +662,7 @@ body {
 }
 
 .message-textarea:hover {
-  border-color: var(--gray-300);
+  border-color: var(--primary-green);
   box-shadow: var(--shadow-md);
 }
 
@@ -751,7 +787,7 @@ body {
 }
 
 .password-toggle:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--light-green);
 }
 
 .api-status {
@@ -910,7 +946,7 @@ body {
 }
 
 .test-btn:hover {
-  background: var(--gray-50);
+  background: var(--light-green);
   border-color: var(--primary-green);
 }
 
@@ -944,7 +980,7 @@ body {
 }
 
 .clear-all-btn:hover {
-  background: rgba(255, 255, 255, 0.7) !important;
+  background: var(--light-green) !important;
   color: var(--text-primary) !important;
   transform: translateY(-1px);
   box-shadow: 

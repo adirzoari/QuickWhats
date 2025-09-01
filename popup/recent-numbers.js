@@ -27,7 +27,6 @@ class RecentNumbersManager {
 
 
   update(recentList) {
-    console.log('Recent numbers update called with:', recentList); // Debug
     
     if (!recentList || !recentList.length) {
       this.recentContainer.style.display = 'none';

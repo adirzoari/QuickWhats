@@ -2,7 +2,6 @@
 (function(window){
   // make sure libphonenumber-js is loaded
   if (!window.libphonenumber) {
-    console.error('libphonenumber-js not loaded');
     return;
   }
 

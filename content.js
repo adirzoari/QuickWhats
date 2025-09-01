@@ -1,4 +1,3 @@
-console.log('Content script loaded!');
 
 // Listen for messages from background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -11,7 +10,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ success: true, base64Data: base64Data });
       })
       .catch(error => {
-        console.log('Content script image download failed:', error.message);
         sendResponse({ success: false, error: error.message });
       });
     
@@ -67,13 +65,11 @@ const downloadImageAsBase64 = async (imageUrl) => {
 
 document.addEventListener('mouseup', () => {
   const selectedText = window.getSelection().toString().trim();
-  console.log('Mouse up, selected text:', selectedText);
 
   if (selectedText.length > 3) {
     const detectedNumbers = detectPhoneNumbers(selectedText);
     
     if (detectedNumbers.length > 0) {
-      console.log('Phone numbers detected:', detectedNumbers);
       
       try {
         // Check if extension context is still valid
@@ -83,20 +79,15 @@ document.addEventListener('mouseup', () => {
             action: 'textSelection',
             source: window.location.hostname
           };
-          console.log('Content script sending message:', JSON.stringify(messageToSend)); // Debug
-          console.log('Window location hostname:', window.location.hostname); // Debug
           
           chrome.runtime.sendMessage(messageToSend, (response) => {
             // Handle response or check for errors
             if (chrome.runtime.lastError) {
-              console.log('Extension context invalidated, ignoring message');
             }
           });
         } else {
-          console.log('Extension context is not available');
         }
       } catch (e) {
-        console.log('Extension context invalidated, content script will be inactive until page reload');
       }
     }
   }

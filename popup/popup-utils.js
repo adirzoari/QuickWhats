@@ -20,7 +20,6 @@ class PopupUtils {
       : fullNumber;
 
     this.elements.phoneInput.value = localNumber;
-    console.log('Local phone number set in input:', localNumber);
   }
 
   setPhoneList(numbers) {
@@ -48,6 +47,18 @@ class PopupUtils {
     }
   }
 
+  hidePhoneSelector() {
+    // Hide the phone selector container
+    this.elements.phoneSelectContainer.style.display = 'none';
+    
+    // Clear the phone inputs so user can manually enter
+    this.elements.phoneInput.value = '';
+    this.elements.countrySelect.value = this.DEFAULT_COUNTRY;
+    
+    // Focus on phone input for user convenience
+    this.elements.phoneInput.focus();
+  }
+
   sendWhatsApp(toastManager, recentNumbersManager) {
     const rawPhone = this.elements.phoneInput.value.replace(/\D/g, '');
     const countryCode = this.elements.countrySelect.value;
@@ -57,7 +68,8 @@ class PopupUtils {
     }
 
     const formattedPhone = `${countryCode}${rawPhone}`;
-    const text = encodeURIComponent(this.elements.messageInput.value || '');
+    const rawText = this.elements.messageInput.value || '';
+    const text = encodeURIComponent(rawText);
     
     // Notify background to track in recent numbers
     chrome.runtime.sendMessage({ 
@@ -70,13 +82,12 @@ class PopupUtils {
       }
     });
     
-    chrome.tabs.create({ url: `https://wa.me/${formattedPhone}?text=${text}` });
+    chrome.tabs.create({ url: `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${text}` });
     toastManager.show('Opening WhatsApp...', 'success');
   }
 
   populateCountries() {
     if (!window.countries || !countries.length) {
-      console.error('Countries data not loaded');
       return;
     }
 
