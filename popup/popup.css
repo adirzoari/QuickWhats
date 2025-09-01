@@ -113,7 +113,8 @@ body {
   color: var(--primary-green);
   border-bottom: 1px solid rgba(113, 200, 169, 0.2);
   position: relative;
-  gap:20px;
+  gap: var(--space-3);
+
 }
 
 .header::after {
