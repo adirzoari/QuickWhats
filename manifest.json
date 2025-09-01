@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "QuickWhats",
   "version": "1.0",
-  "description": "Detects phone numbers and sends WhatsApp messages.",
+  "description": "An AI Chrome extension that detects phone numbers from text or images on web pages and sends WhatsApp messages instantly.",
   "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
