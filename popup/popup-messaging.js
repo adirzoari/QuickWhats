@@ -19,7 +19,6 @@ class PopupMessaging {
   setupMessageListener() {
     // Listen for real-time updates from background
     chrome.runtime.onMessage.addListener((message) => {
-      console.log('Received message from background:', message);
       
       // Only process phone number updates from broadcast messages (not response messages)
       // Ignore phone updates that come with recent number updates (likely from delete operations)
@@ -58,9 +57,6 @@ class PopupMessaging {
     
     // Fetch last detected numbers and recent numbers from background
     chrome.runtime.sendMessage({ action: 'getLastPhoneNumbers' }, ({ phoneNumbers, countryCode, recentNumbers }) => {
-      console.log('Received last phone numbers:', phoneNumbers);
-      console.log('Received recent numbers:', recentNumbers);
-      console.log('Recent numbers type:', typeof recentNumbers, 'Length:', recentNumbers?.length);
       
       if (phoneNumbers?.length) this.popupUtils.setPhoneList(phoneNumbers);
       if (countryCode) this.popupUtils.elements.countrySelect.value = countryCode;
@@ -71,7 +67,6 @@ class PopupMessaging {
   }
 
   sendCountryCodeUpdate(countryCode) {
-    console.log('Country changed to:', countryCode);
     chrome.runtime.sendMessage({ countryCode });
   }
 }

@@ -1,0 +1,216 @@
+/**
+ * Emoji Picker Styles - QuickWhats Extension
+ * Uses existing design system from popup.css
+ */
+
+/* Inline emoji trigger button */
+.emoji-trigger-btn-inline {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.message-textarea.rtl + .emoji-trigger-btn-inline {
+  right: auto;
+  left: 6px;
+}
+
+.emoji-trigger-btn-inline:hover {
+  background: var(--gray-100);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.emoji-trigger-btn-inline:active {
+  transform: scale(0.9);
+}
+
+/* Message section layout with inline emoji button */
+.message-section {
+  position: relative;
+}
+
+.message-textarea-container {
+  position: relative;
+  width: 100%;
+}
+
+.message-textarea {
+  width: 100%;
+  padding-right: 45px;
+  resize: vertical;
+  direction: ltr;
+  text-align: left;
+}
+
+.message-textarea.rtl {
+  direction: rtl;
+  text-align: right;
+  padding-right: 12px;
+  padding-left: 45px;
+}
+
+/* Emoji picker container */
+.emoji-picker {
+  position: fixed;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xl);
+  z-index: 1000;
+  width: 320px;
+  max-height: 360px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+.emoji-picker.hidden {
+  display: none;
+}
+
+/* Picker header */
+.emoji-picker-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--gray-50);
+  flex-shrink: 0;
+}
+
+.emoji-categories {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.category-tab {
+  background: transparent;
+  border: none;
+  padding: var(--space-2);
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  opacity: 0.6;
+}
+
+.category-tab:hover {
+  background: var(--light-green);
+  opacity: 1;
+}
+
+.category-tab.active {
+  background: var(--primary-green);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+
+/* Emoji grid */
+.emoji-grid {
+  padding: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--space-1);
+  max-height: 240px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.emoji-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.emoji-grid::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: var(--radius-sm);
+}
+
+.emoji-grid::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-sm);
+}
+
+.emoji-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+.emoji-item {
+  background: transparent;
+  border: none;
+  padding: var(--space-2);
+  font-size: 1.3rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+}
+
+.emoji-item:hover {
+  background: var(--light-green);
+  transform: scale(1.1);
+}
+
+.emoji-item:active {
+  transform: scale(1.05);
+  background: var(--light-green);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 400px) {
+  .emoji-picker {
+    width: 280px;
+    max-height: 300px;
+  }
+  
+  .emoji-grid {
+    grid-template-columns: repeat(7, 1fr);
+    max-height: 200px;
+  }
+  
+  .emoji-item {
+    font-size: 1.1rem;
+    padding: var(--space-1);
+  }
+}
+
+/* Animation for picker show/hide */
+.emoji-picker {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s ease;
+}
+
+.emoji-picker:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Focus styles for accessibility */
+.emoji-trigger-btn:focus,
+.category-tab:focus,
+.emoji-item:focus {
+  outline: 2px solid var(--primary-green);
+  outline-offset: 2px;
+}
+

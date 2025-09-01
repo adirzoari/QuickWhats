@@ -12,7 +12,6 @@ const loadRecentNumbers = async () => {
     const result = await chrome.storage.local.get(['recentNumbers']);
     recentNumbers = result.recentNumbers || [];
   } catch (error) {
-    console.error('Failed to load recent numbers:', error);
     recentNumbers = [];
   }
 };
@@ -22,7 +21,6 @@ const saveRecentNumbers = async () => {
   try {
     await chrome.storage.local.set({ recentNumbers });
   } catch (error) {
-    console.error('Failed to save recent numbers:', error);
   }
 };
 

@@ -1,5 +1,8 @@
 // Import modules
 importScripts('recent-storage.js');
+importScripts('openai-models.js');
+importScripts('image-downloader.js');
+importScripts('openai-client.js');
 importScripts('image-processor.js');
 
 let lastPhoneNumbers = []; // store all detected numbers
@@ -30,7 +33,6 @@ const sendToastToBrowser = async (message, type = 'info', duration = 3000) => {
       });
     }
   } catch (error) {
-    console.log('Could not send toast to browser:', error);
   }
 };
 
@@ -45,7 +47,6 @@ const updateExtensionBadge = (count) => {
       chrome.action.setBadgeText({ text: '' });
     }
   } catch (error) {
-    console.error('Failed to update badge:', error);
   }
 };
 
@@ -54,16 +55,12 @@ let lastSource = 'unknown'; // Track the source of last detected numbers
 
 // Add timestamp to track lastSource changes
 const trackLastSourceChange = (newSource, location) => {
-  console.log(`🔄 LAST_SOURCE_CHANGE [${location}]: "${lastSource}" → "${newSource}" at ${new Date().toLocaleTimeString()}`);
   lastSource = newSource;
 };
 
 const sendNumbersToPopup = (numbers, source = 'unknown', action = null) => {
   lastPhoneNumbers = numbers;
   trackLastSourceChange(source, 'sendNumbersToPopup');
-  console.log('sendNumbersToPopup called with source:', source, 'type:', typeof source); // Debug logging
-  console.log('lastSource set to:', lastSource, 'type:', typeof lastSource); // Debug lastSource
-  console.log('lastSource length:', lastSource?.length); // Debug length
   
   // Prepare toast message if numbers detected
   let toastMessage = null;
@@ -94,7 +91,6 @@ const sendNumbersToPopup = (numbers, source = 'unknown', action = null) => {
   });
   
   updateExtensionBadge(numbers.length);
-  console.log('Sent phone numbers to popup:', numbers);
 };
 
 // Open WhatsApp for first number
@@ -152,31 +148,24 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 // ------------------- Message Listener ------------------- //
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('Received message:', message);
 
   // Popup opened - clear badge
   if (message.action === 'popupOpened') {
     updateExtensionBadge(0);
-    console.log('Badge cleared - popup opened');
-    console.log('POPUP OPENED - lastSource at this moment:', lastSource); // Debug
   }
 
   // Popup requests last detected numbers and recent numbers
   if (message.action === 'getLastPhoneNumbers') {
-    console.log('GET_LAST_PHONE_NUMBERS - lastSource at this moment:', lastSource); // Debug
     
     // Ensure recent numbers are loaded before responding
     loadRecentNumbers().then(() => {
       const recentNumbers = getRecentNumbers();
-      console.log('Sending recent numbers to popup:', recentNumbers);
-      console.log('GET_LAST_PHONE_NUMBERS - lastSource before response:', lastSource); // Debug
       sendResponse({ 
         phoneNumbers: lastPhoneNumbers, 
         countryCode: lastCountryCode,
         recentNumbers: recentNumbers
       });
     }).catch((error) => {
-      console.log('Error loading recent numbers:', error);
       sendResponse({ 
         phoneNumbers: lastPhoneNumbers, 
         countryCode: lastCountryCode,
@@ -189,58 +178,41 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Popup updates country code
   if (message.countryCode) {
     lastCountryCode = message.countryCode;
-    console.log('Country code updated:', lastCountryCode);
   }
 
   // Content script detected phone numbers from text selection
   if (message.phoneNumbers && message.action === 'textSelection') {
     lastPhoneNumbers = message.phoneNumbers;
-    console.log('Updated phone numbers from content script:', lastPhoneNumbers);
-    console.log('Full message received:', JSON.stringify(message)); // Debug full message
-    console.log('Text selection source:', message.source); // Debug logging
     
     // Use the actual source from message, don't fallback to 'textSelection' string
     const actualSource = message.source || 'unknown';
-    console.log('Using source:', actualSource);
     sendNumbersToPopup(lastPhoneNumbers, actualSource, message.action);
   }
   // Legacy support: Content script updates single selected phone number (only if not modern format)
   else if (message.phoneNumber && !message.phoneNumbers) {
     lastPhoneNumbers = [message.phoneNumber];
-    console.log('Updated lastPhoneNumber from content script:', lastPhoneNumbers);
-    console.log('Legacy message:', JSON.stringify(message)); // Debug full message
-    console.log('Legacy phone number source:', message.source); // Debug logging
     
     const actualSource = message.source || 'unknown';
-    console.log('Legacy using source:', actualSource);
     sendNumbersToPopup(lastPhoneNumbers, actualSource);
   }
 
   // Popup sends WhatsApp message (track in recent)
   if (message.action === 'sendWhatsApp' && message.phoneNumber) {
-    console.log('SendWhatsApp - message source:', message.source); // Debug
-    console.log('SendWhatsApp - lastSource:', lastSource); // Debug
-    console.log('SendWhatsApp - lastSource type:', typeof lastSource); // Debug
     
     // Use message source if provided, otherwise use lastSource, fallback to 'unknown'
     let sourceToUse = message.source;
     
     if (!sourceToUse && lastSource && lastSource !== 'unknown') {
-      console.log('Using lastSource:', lastSource);
       sourceToUse = lastSource;
     } else if (!sourceToUse) {
-      console.log('No valid source available, using unknown');
       sourceToUse = 'unknown';
     }
     
     // Extra validation
     if (sourceToUse === 'undefined' || sourceToUse === 'null' || sourceToUse === '') {
-      console.log('WARNING: sourceToUse is invalid string, using unknown');
       sourceToUse = 'unknown';
     }
     
-    console.log('Final sourceToUse:', sourceToUse); // Debug
-    console.log('Adding to recent numbers with source:', sourceToUse); // Debug
     
     addToRecentNumbers(message.phoneNumber, message.countryCode || lastCountryCode, sourceToUse);
     sendResponse({ recentNumbers: getRecentNumbers() });
@@ -266,7 +238,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   // Popup clears all recent numbers
   if (message.action === 'clearAllRecentNumbers') {
-    console.log('CLEARING ALL RECENT NUMBERS'); // Debug
     loadRecentNumbers().then(() => {
       clearAllRecentNumbers();
       sendResponse({ recentNumbers: getRecentNumbers() });

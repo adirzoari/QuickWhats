@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendBtn = document.getElementById('sendBtn');
   const phoneSelect = document.getElementById('phoneSelect');
   const phoneSelectContainer = document.getElementById('phoneSelectContainer');
+  const phoneSelectClose = document.getElementById('phoneSelectClose');
   const recentContainer = document.getElementById('recentContainer');
   const recentNumbers = document.getElementById('recentNumbers');
   const mainContent = document.getElementById('mainContent');
@@ -15,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsBtn = document.getElementById('settingsBtn');
   const DEFAULT_COUNTRY = 'IL';
 
-  console.log('Popup loaded');
 
   // Settings elements
   const apiKeyInput = document.getElementById('apiKeyInput');
+  const modelSelect = document.getElementById('modelSelect');
   const saveSettingsBtn = document.getElementById('saveSettingsBtn');
   const testApiBtn = document.getElementById('testApiBtn');
   const statusDot = document.getElementById('statusDot');
@@ -30,11 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
     countrySelect,
     messageInput,
     phoneSelect,
-    phoneSelectContainer
+    phoneSelectContainer,
+    phoneSelectClose
   };
 
   const settingsElements = {
     apiKeyInput,
+    modelSelect,
     saveSettingsBtn,
     testApiBtn,
     statusDot,
@@ -116,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
     popupUtils.setPhoneNumber(selected);
   });
 
+  phoneSelectClose.addEventListener('click', () => {
+    popupUtils.hidePhoneSelector();
+  });
+
   countrySelect.addEventListener('change', () => {
     messaging.sendCountryCodeUpdate(countrySelect.value);
   });
@@ -131,6 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize recent numbers storage
   loadRecentNumbers();
+  
+  // Initialize emoji picker
+  if (typeof window.initializeEmojiPicker === 'function') {
+    window.initializeEmojiPicker();
+  }
 
-  console.log('Event listeners attached');
 });
