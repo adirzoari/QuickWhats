@@ -175,7 +175,7 @@ body {
 /* Input row layout */
 .input-row {
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--space-2);
   align-items: center;
 }
 
@@ -197,15 +197,15 @@ body {
 }
 
 #phoneSelectContainer .card-body {
-  padding: var(--spacing-3);
+  padding: var(--space-3);
 }
 
 /* Message textarea enhancement */
 .message-textarea {
   min-height: 120px !important;
   resize: vertical;
-  padding-top: var(--spacing-4) !important;
-  padding-bottom: var(--spacing-4) !important;
+  padding-top: var(--space-2) !important;
+  padding-bottom: var(--space-2) !important;
   line-height: 1.5;
   font-family: inherit;
 }
@@ -234,7 +234,7 @@ body {
 }
 
 #settingsContent .flex.items-center.justify-between {
-  margin-bottom: var(--spacing-2);
+  margin-bottom: var(--space-2);
 }
 
 #settingsContent .text-xs {
@@ -244,7 +244,7 @@ body {
 
 /* Recent numbers section */
 .recent-section {
-  margin-top: var(--spacing-4);
+  margin-top: var(--space-4);
 }
 
 .recent-header {
@@ -256,7 +256,7 @@ body {
 .recent-numbers {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--space-2);
 }
 
 .recent-number-item {
@@ -306,7 +306,7 @@ body {
   color: var(--color-text-secondary);
   display: flex;
   align-items: center;
-  gap: var(--spacing-1);
+  gap: var(--space-1);
 }
 
 .recent-time {
@@ -345,7 +345,7 @@ body {
   border: none;
   font-size: var(--font-size-sm);
   cursor: pointer;
-  padding: var(--spacing-1);
+  padding: var(--space-1);
   border-radius: var(--radius-sm);
   opacity: 0.6;
   transition: var(--transition-all);
@@ -361,7 +361,7 @@ body {
 
 .recent-clear-all-btn {
   font-size: var(--font-size-xs);
-  padding: var(--spacing-1) var(--spacing-2);
+  padding: var(--space-1) var(--space-2);
 }
 
 /* Toast notification styles */
@@ -588,31 +588,45 @@ body {
 
 .message-label {
   display: block;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: var(--space-2);
-  font-size: 0.9rem;
+  margin-bottom: var(--space-3);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
 }
 
 .message-textarea {
   width: 100%;
-  padding: var(--space-3);
-  border: 1px solid var(--border);
+  padding: var(--space-1);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-lg);
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  line-height: 1.6;
+  transition: all 0.3s ease;
   background: var(--surface);
   color: var(--text-primary);
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
   font-family: var(--font-family);
   box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
 }
 
 .message-textarea:focus {
   outline: none;
   border-color: var(--primary-green);
-  box-shadow: 0 0 0 3px rgba(113, 200, 169, 0.1);
+  box-shadow: 0 0 0 3px rgba(113, 200, 169, 0.1), var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.message-textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.message-textarea:hover {
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-md);
 }
 
 /* Send button */

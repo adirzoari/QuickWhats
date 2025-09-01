@@ -25,22 +25,6 @@ class RecentNumbersManager {
     return `${days}d ago`;
   }
 
-  formatSource(source) {
-    if (!source || source === 'unknown') {
-      return 'unknown';
-    }
-    
-    if (source === 'recent') {
-      return 'recent';
-    }
-    
-    // Handle specific source types
-    if (source === 'image') return 'image';
-    
-    // Clean up domain names  
-    const cleanSource = source.replace(/^www\./, '').replace(/^https?:\/\//, '');
-    return cleanSource;
-  }
 
   update(recentList) {
     console.log('Recent numbers update called with:', recentList); // Debug
@@ -52,19 +36,13 @@ class RecentNumbersManager {
 
     this.recentNumbers.innerHTML = '';
     recentList.slice(0, 5).forEach(item => {
-      console.log('Processing recent item:', JSON.stringify(item)); // Debug each item
-      console.log('Item source:', item.source); // Debug source specifically
-      
-      const formattedSource = this.formatSource(item.source);
-      console.log('Formatted source result:', formattedSource); // Debug formatted result
-      
       const recentItem = document.createElement('div');
       recentItem.className = 'recent-number-item';
       recentItem.innerHTML = `
         <div class="recent-number-main">
           <div class="recent-number-content">
             <div class="recent-number-text">${item.number}</div>
-            <div class="recent-number-meta">🌐 ${this.formatSource(item.source)} • ${this.formatTimeAgo(item.timestamp)}</div>
+            <div class="recent-number-meta">${this.formatTimeAgo(item.timestamp)}</div>
           </div>
           <button class="recent-delete-btn" title="Remove number">🗑️</button>
         </div>
